@@ -4,7 +4,7 @@
     <div class="row mt-4">
       <div class="col-12">
         <div class="table-responsive">
-          <table class="table table-striped table-hover table-bordered">
+          <table class="table table-hover table-bordered">
             <thead>
             <tr>
               <th>Cantidad</th>
@@ -12,10 +12,11 @@
               <th>Precio</th>
               <th>
                 Descuento&nbsp;&nbsp;
-                <input type="checkbox" v-model="globalDiscount"> Aplicar a todos
+                <input class="no-print" type="checkbox" v-model="globalDiscount"> <label class="no-print" for="">Aplicar
+                a todos</label>
               </th>
               <th>Subtotal</th>
-              <th>Acción</th>
+              <th class="no-print">Acción</th>
             </tr>
             </thead>
             <tbody>
@@ -34,11 +35,11 @@
               <td>
                 <div class="input-group" v-if="item.id == 1">
                   <input class="form-control" min="0" max="100" v-model="item.discount" type="number">
-                  <button class="btn btn-success" disabled>%</button>
+                  <button class="btn btn-success no-print" disabled>%</button>
                 </div>
                 <div class="input-group" v-else-if="item.id !== 1 && !globalDiscount">
                   <input class="form-control" min="0" max="100" v-model="item.discount" type="number">
-                  <button class="btn btn-success" disabled>%</button>
+                  <button class="btn btn-success no-print" disabled>%</button>
                 </div>
                 <div v-else>
                   {{ items[0].discount }}
@@ -47,7 +48,7 @@
               <td>
                 {{ calculateSubtotal(item).toLocaleString('es-CO', {currency: 'COP', style: 'currency'}) }}
               </td>
-              <td>
+              <td class="no-print">
                 <button v-if="item.id !== 1" class="btn btn-danger icon" @click="remove(item.id)">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
@@ -68,7 +69,7 @@
         </div>
       </div>
     </div>
-    <div class="row mt-2">
+    <div class="row mt-2 no-print">
       <div class="col-sm-6">
         <button @click="add" class="btn btn-primary">Añadir otro</button>
       </div>
@@ -158,5 +159,11 @@ const calculateSubtotal = ({price, quantity, discount}: Item) => {
 button.icon {
   height: 50px;
   width: 60px;
+}
+
+@media print {
+  .no-print {
+    display: none;
+  }
 }
 </style>

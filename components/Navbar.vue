@@ -2,19 +2,13 @@
 const route = useRoute()
 
 const isActive = (path: string): boolean => {
-  const altPaths = [
-    `${path}-id`.replace('/', ''),
-    `${path}-id-edit`.replace('/', ''),
-    `${path}-id-product`.replace('/', ''),
-    `${path}-new`.replace('/', '')
-  ]
-  return route.path == path || altPaths.includes(route.name as string)
+  return route.path == path || route.name as string == path
 }
 
 </script>
 
 <template>
-  <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+  <nav class="navbar navbar-dark bg-dark navbar-expand-lg no-print">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Generador-Factura</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
