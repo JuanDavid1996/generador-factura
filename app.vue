@@ -11,7 +11,8 @@
     <div class="row mt-2">
       <div class="col-sm-6">
         <ul>
-          <li v-for="(product, index) in products">{{ product }}  <a href="#" @click="removeProduct(index)">Quitar</a></li>
+          <li v-for="(product, index) in products">{{ product }} <a href="#" @click="removeProduct(index)">Quitar</a>
+          </li>
         </ul>
       </div>
     </div>
