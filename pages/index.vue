@@ -1,22 +1,6 @@
 <template>
+  <Navbar/>
   <div class="container-fluid mt-2">
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="input-group">
-          <input v-model="productName" type="text" class="form-control">
-          <button @click.prevent="saveProduct" class="btn btn-success">Guardar</button>
-        </div>
-      </div>
-    </div>
-    <div class="row mt-2">
-      <div class="col-sm-6">
-        <ul>
-          <li v-for="(product, index) in products">{{ product }} <a href="#" @click="removeProduct(index)">Quitar</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-
     <div class="row mt-4">
       <div class="col-12">
         <div class="table-responsive">
@@ -97,8 +81,15 @@
   </div>
 </template>
 <script setup lang="ts">
-const products = ref<string[]>([])
-const productName = ref<string>("")
+import Navbar from "~/components/Navbar.vue";
+import {useProduct} from "~/composable/useProduct";
+
+const {products, loadProductsFromLocalStorage} = useProduct()
+
+onMounted(() => {
+  loadProductsFromLocalStorage()
+})
+
 
 interface Item {
   id: number
@@ -162,27 +153,6 @@ const calculateSubtotal = ({price, quantity, discount}: Item) => {
   }
   return 0
 }
-
-onMounted(() => {
-  loadProductsFromLocalStorage()
-})
-
-const saveProduct = () => {
-  products.value = [...products.value, productName.value]
-  localStorage.setItem("products", JSON.stringify(products.value))
-  productName.value = ""
-}
-
-const removeProduct = (index: number) => {
-  products.value.splice(index, 1);
-  localStorage.setItem("products", JSON.stringify(products.value))
-}
-
-const loadProductsFromLocalStorage = () => {
-  const localStorageProducts = localStorage.getItem("products")
-  products.value = localStorageProducts != null ? JSON.parse(localStorageProducts) : []
-}
-
 </script>
 <style>
 button.icon {
